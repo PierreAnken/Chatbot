@@ -1,0 +1,12 @@
+
+How to Convert Text to Speech in Python
+https://www.thepythoncode.com/article/convert-text-to-speech-in-python
+
+Creating ChatBot Using Natural Language Processing in Python
+https://www.analyticsvidhya.com/blog/2021/12/creating-chatbot-building-using-python/
+
+Personal Voice Assistant in Python
+https://www.geeksforgeeks.org/personal-voice-assistant-in-python/
+
+Python: Text to Speech
+https://scriptverse.academy/tutorials/python-text-to-speech.html
