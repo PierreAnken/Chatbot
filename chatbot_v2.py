@@ -1,8 +1,12 @@
 import json
-import pyttsx3 as tts
 import datetime
 import string
 from random import sample
+
+try:
+    import pyttsx3 as tts
+except:
+    raise Exception(f'missing library pyttsx3. Please install it with "pip install pyttsx3"')
 
 
 def compute_message_probability(user_message, list_optional_keyword, list_required_keyword=None):
