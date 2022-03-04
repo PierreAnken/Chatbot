@@ -14,21 +14,21 @@ def compute_message_probability(user_message, list_optional_keyword, list_requir
     list_required_keyword = list_required_keyword or []
 
     # count matching word / mandatory word in user input
-    matching_word_count = 0
-    matching_mandatory_word_count = 0
+    matching_optional_keyword_count = 0
+    matching_mandatory_keyword_count = 0
 
     for word in user_message:
         if word in list_optional_keyword:
-            matching_word_count += 1
+            matching_optional_keyword_count += 1
         if word in list_required_keyword:
-            matching_mandatory_word_count += 1
+            matching_mandatory_keyword_count += 1
 
     # compute the % of matching words
-    message_matching_score = int(float(matching_word_count) / float(len(list_optional_keyword)) * 100)
+    message_matching_score = int(float(matching_optional_keyword_count) / float(len(list_optional_keyword)) * 100)
 
     # if we have mandatory word, and none where entered by user, the score should be 0
     if len(list_required_keyword) > 0:
-        if matching_mandatory_word_count == 0:
+        if matching_mandatory_keyword_count == 0:
             message_matching_score = 0
 
     return message_matching_score
