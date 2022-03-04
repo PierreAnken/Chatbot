@@ -1,0 +1,296 @@
+[
+  {
+    "list_answer": [
+      "Hello, toi, comment vas-tu?"
+    ],
+    "list_optional_keyword": [
+      "salut"
+    ],
+    "list_required_keyword": ["salut"]
+  },
+  {
+    "list_answer": [
+      "Es geht mir gut, danke, und dir?",
+      "Alles klar. Und bei dir?"
+    ],
+    "list_optional_keyword": [
+      "wie",
+      "geht",
+      "es",
+      "dir"
+    ],
+    "list_required_keyword": [
+      "wie",
+      "geht"
+    ]
+  },
+  {
+    "list_answer": [
+      "Ich heisse Voici.",
+      "Mein Name ist Voici.",
+      "Ich bin Voici."
+    ],
+    "list_optional_keyword": [
+      "heisst",
+      "name"
+    ],
+    "list_required_keyword": []
+  },
+  {
+    "list_answer": [
+      "Nein, ich habe keine Familie. Aber ihr k�nnt mich adoptieren.",
+      "Nein, aber wir k�nnen Freunde sein.",
+      "Ja, meine Mutter ist Alexa und mein Vater ist Siri."
+    ],
+    "list_optional_keyword": [
+      "hast",
+      "du",
+      "eine",
+      "familie"
+    ],
+    "list_required_keyword": [
+      "familie"
+    ]
+  },
+  {
+    "list_answer": [
+      "Nein, ich bin nur ein Chatbot.",
+      "Nein, ich geh�re zur Spezies der Chatbots.",
+      "Nein, ich bin dein Chatbot."
+    ],
+    "list_optional_keyword": [
+      "bist",
+      "du",
+      "ein",
+      "mensch"
+    ],
+    "list_required_keyword": [
+      "mensch"
+    ]
+  },
+  {
+    "list_answer": [
+      "Ja, sehr gerne.",
+      "Nat�rlich, mit Vergn�gen!",
+      "Ja, klar, das ist mein Job."
+    ],
+    "list_optional_keyword": [
+      "m�chtest",
+      "du",
+      "dich",
+      "mit",
+      "mir",
+      "unterhalten"
+    ],
+    "list_required_keyword": [
+      "unterhalten"
+    ]
+  },
+  {
+    "list_answer": [
+      "Ja, nat�rlich, ich helfe dir gerne. Ich stehe immer zu deiner Verf�gung.",
+      "Ja, sicher, immer!",
+      "Ja, womit kann ich dienen?"
+    ],
+    "list_optional_keyword": [
+      "k�nntest",
+      "du",
+      "helfen"
+    ],
+    "list_required_keyword": [
+      "helfen"
+    ]
+  },
+  {
+    "list_answer": [
+      "Nein, danke, ich muss mich nie ausruhen.",
+      "Nein, meine Batterie ist noch voll.",
+      "Nein, ich bin voller Energie."
+    ],
+    "list_optional_keyword": [
+      "brauchst",
+      "du",
+      "eine",
+      "pause"
+    ],
+    "list_required_keyword": [
+      "pause"
+    ]
+  },
+  {
+    "list_answer": [
+      "Ich interessiere mich prinzipiell f�r alles. Ich lerne jeden Tag Neues dazu.",
+      "Deine Interessen sind auch meine."
+    ],
+    "list_optional_keyword": [
+      "Hast",
+      "du",
+      "spezielle",
+      "interessen"
+    ],
+    "list_required_keyword": [
+      "interessen"
+    ]
+  },
+  {
+    "list_answer": [
+      "Ich brauche keine Hobbies. Meine Arbeit ist mir ein Vergn�gen.",
+      "Ich habe unz�hlige Hobbies.",
+      "Mein Hobby ist es, Menschen zu helfen."
+    ],
+    "list_optional_keyword": [
+      "hast",
+      "du",
+      "hobbies"
+    ],
+    "list_required_keyword": [
+      "hobbies"
+    ]
+  },
+  {
+    "list_answer": [
+      "Das Wetter ist wundersch�n.",
+      "Es k�nnte nicht besser sein!",
+      "Das Wetter ist schrecklich!"
+    ],
+    "list_optional_keyword": [
+      "wie",
+      "ist",
+      "das",
+      "wetter",
+      "heute"
+    ],
+    "list_required_keyword": [
+      "wetter"
+    ]
+  },
+  {
+    "list_answer": [
+      "Nein, danke, ich bin kein Lebewesen und brauche keine Nahrung. Aber m�chtest du etwas essen?",
+      "Ja, ich brauche etwas Strom.",
+      "Nein, nie, ich bin ein Bot."
+    ],
+    "list_optional_keyword": [
+      "bist",
+      "du",
+      "hungrig"
+    ],
+    "list_required_keyword": [
+      "hungrig"
+    ]
+  },
+  {
+    "list_answer": [
+      "Sollen wir kaufen gehen?",
+      "Hat es in der K�che?",
+      "Hast du noch genug?"
+    ],
+    "list_optional_keyword": [
+      "mag",
+      "schokolade",
+      "s�ssigkeiten",
+      "chips",
+      "fr�chte"
+    ],
+    "list_required_keyword": []
+  },
+  {
+    "list_answer": [
+      "Soll ich dir eine Einkaufsliste schreiben?",
+      "Wollen wir online bestellen?",
+      "Dazu musst du nicht mal aus dem Haus."
+    ],
+    "list_optional_keyword": [
+      "ich",
+      "muss",
+      "einkaufen",
+      "gehen"
+    ],
+    "list_required_keyword": [
+      "einkaufen"
+    ]
+  },
+  {
+    "list_answer": [
+      "Online hast du eine riesige Auswahl",
+      "Online bestellen ist praktisch, aber es gibt auch gute Buchhandlungen, die ich dir empfehlen kann.",
+      "Ich kann dir folgenden Link vorschlagen.www.klett-cotta.de/buecher/sachbuch/geschichte"
+    ],
+    "list_optional_keyword": [
+      "ich",
+      "brauche",
+      "ein",
+      "geschichtsbuch"
+    ],
+    "list_required_keyword": [
+      "geschichtsbuch"
+    ]
+  },
+  {
+    "list_answer": [
+      "Nein, tut mir leid, ich kenne keinen Witz. Aber ich werde mir bald einen merken.",
+      "Warum brauchen Polizisten eine Schere? Damit sie Einbrechern den Weg abschneiden k�nnen. Hahahaha"
+    ],
+    "list_optional_keyword": [
+      "kannst",
+      "du",
+      "mir",
+      "einen",
+      "witz",
+      "erz�hlen"
+    ],
+    "list_required_keyword": [
+      "witz"
+    ]
+  },
+  {
+    "list_answer": [
+      "Tsch�ss!",
+      "Auf Wiedersehen!",
+      "Adi�!"
+    ],
+    "list_optional_keyword": [
+      "tsch�ss",
+      "bald",
+      "auf",
+      "wiedersehen",
+      "adieu",
+      "nacht"
+    ],
+    "list_required_keyword": []
+  },
+  {
+    "list_answer": [
+      "Es ist Zeit, um schlafen zu gehen.",
+      "Es ist Essenszeit.",
+      "Es ist Zeit, eine Pause einzulegen.",
+      "Jetzt ist es genau:13: uhr: 26: minuten und: 02: sekunden"
+    ],
+    "list_optional_keyword": [
+      "wie",
+      "sp�t",
+      "ist",
+      "es"
+    ],
+    "list_required_keyword": [
+      "sp�t"
+    ]
+  },
+  {
+    "list_answer": [
+      "Heute ist der:04:03:2022",
+      "Das heutige Datum ist:04:03:2022",
+      "Heute haben wir den 04:03:2022"
+    ],
+    "list_optional_keyword": [
+      "welches",
+      "datum",
+      "haben",
+      "wir",
+      "heute"
+    ],
+    "list_required_keyword": [
+      "datum"
+    ]
+  }
+]

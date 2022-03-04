@@ -1,15 +1,16 @@
-import json
 import datetime
+import json
 import string
 from random import sample
 
 try:
     import pyttsx3 as tts
 except:
-    raise Exception(f'missing library pyttsx3. Please install it with "pip install pyttsx3"')
+    raise Exception(f'Missing library pyttsx3. Please install it with "pip install pyttsx3"')
 
 
 def compute_message_probability(user_message, list_optional_keyword, list_required_keyword=None):
+
     # If no required word, init empty list needed for the script
     list_required_keyword = list_required_keyword or []
 
@@ -28,7 +29,7 @@ def compute_message_probability(user_message, list_optional_keyword, list_requir
 
     # if we have mandatory word, and none where entered by user, the score should be 0
     if len(list_required_keyword) > 0:
-        if matching_mandatory_keyword_count == 0:
+        if matching_mandatory_keyword_count != len(list_required_keyword):
             message_matching_score = 0
 
     return message_matching_score
@@ -54,13 +55,57 @@ def get_highest_match_answer(user_input_cleaned):
 
     # if the matching score is 0
     if max_matching_score == 0:
-        answer = 'Entschuldige, das habe ich nicht verstanden :-('
 
+        # check learned dictionary
+        # for each question the bot was trained for
+        for bot_dictionary_entry in bot_learned_answers:
+
+            # get the matching score of the question
+            matching_score = compute_message_probability(user_input_cleaned, bot_dictionary_entry['list_optional_keyword'], bot_dictionary_entry['list_required_keyword'])
+
+            # if the score is higher then the previous higher one, we overwrite it
+            if matching_score > max_matching_score:
+                max_matching_score = matching_score
+                highest_response_list = bot_dictionary_entry['list_answer']
+
+        if max_matching_score == 0:
+            # When the bot did not had an answer
+            save_new_learned_question(user_input_cleaned)
+
+            if user_language == 'de':
+                answer = 'Danke für das Hinweis!'
+            elif user_language == 'en':
+                answer = 'Thank you for the hint!'
+            else:
+                answer = 'Merci de ton aide!'
+
+        else:
+            # chose randomly from one of the known answers
+            answer = sample(highest_response_list, 1)[0]
     else:
         # chose randomly from one of the known answers
         answer = sample(highest_response_list, 1)[0]
 
     return answer
+
+
+def save_new_learned_question(user_input_cleaned):
+
+    if user_language == 'de':
+        correct_answer = input('Entschuldige, das habe ich nicht verstanden :-(\nWas wäre für euch ein richtige antwort? ')
+    elif user_language == 'en':
+        correct_answer = input('Sorry I did not understood you :-(\nWhat would be a right answer for you? ')
+    else:
+        correct_answer = input('Désolé je ne t\'ai pas compris :-(\nComment tu répondrais à cette question? ')
+
+    new_learned_dictionary = {
+        'list_answer': [correct_answer],
+        'list_optional_keyword': user_input_cleaned,
+        'list_required_keyword': []
+    }
+    bot_learned_answers.append(new_learned_dictionary)
+    with open(f'learned_answers_{user_language}.json', 'w') as file2:
+        file2.write(json.dumps(bot_learned_answers, ensure_ascii=False))
 
 
 def give_answer(answer):
@@ -70,16 +115,28 @@ def give_answer(answer):
 
 
 def init_bot():
-    voice_de = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speeches\Voices\Tokens\TTS_MS_DE-DE_HEDDA_11.0"
+
+
+    if user_language == 'de':
+        voice = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speeches\Voices\Tokens\TTS_MS_DE-DE_HEDDA_11.0"
+    elif user_language == 'en':
+        voice = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
+    else:
+        voice = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_FR-FR_HORTENSE_11.0"
+
     speaker = tts.init()
+
+    # Zu entfernen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    for voice in speaker.getProperty('voices'):
+        print(voice, voice.id)
+
     speaker.setProperty('rate', 170)
     speaker.setProperty('volume', 0.7)
-    speaker.setProperty('voice', voice_de)
+    speaker.setProperty('voice', voice)
     return speaker
 
 
 def get_response(user_input):
-
     # if there is at least a letter this is a question else a mathematical expression
     has_letter = any([letter.lower() in string.ascii_lowercase for letter in user_input])
     if has_letter:
@@ -112,12 +169,21 @@ if __name__ == '__main__':
     time = datetime.datetime.now().strftime('%H: uhr: %M: minuten und: %S: sekunden')
     today = datetime.datetime.now().strftime('%d:%m:%Y')
 
+
+    user_language = ''
+    while user_language not in ('de', 'en', 'fr'):
+        user_language = input('What is your language? (de/en/fr)')
+
     # initalize sound
     bot = init_bot()
 
     # Loads the bot dictionary from file
-    with open('bot_dictionary.json') as file:
+    with open(f'bot_dictionary_{user_language}.json') as file:
         bot_dictionary = json.loads(file.read())
+
+    # Loads the bot learned question from file
+    with open(f'learned_answers_{user_language}.json') as file:
+        bot_learned_answers = json.loads(file.read())
 
     # Ask user for a question and try to answer it as a bot
     while True:

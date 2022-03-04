@@ -1,0 +1,16 @@
+[
+  {
+    "list_answer": [
+      "I'm fine too, thanks. What's your name?"
+    ],
+    "list_optional_keyword": [
+      "m",
+      "fine",
+      "thanks",
+      "what",
+      "about",
+      "yourself"
+    ],
+    "list_required_keyword": []
+  }
+]
