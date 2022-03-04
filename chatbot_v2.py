@@ -36,20 +36,24 @@ def get_highest_match_answer(user_input_cleaned):
 
     max_matching_score = -1
     highest_response_list = []
-    # get the best matching answer
+
+    # for each question the bot was trained for
     for bot_dictionary_entry in bot_dictionary:
-        list_answer, list_optional_keyword, list_required_keyword = bot_dictionary_entry
-        matching_score = compute_message_probability(user_input_cleaned, list_optional_keyword, list_required_keyword)
+
+        # get the matching score of the question
+        matching_score = compute_message_probability(user_input_cleaned, bot_dictionary_entry['list_optional_keyword'], bot_dictionary_entry['list_required_keyword'])
+
+        # if the score is higher then the previous higher one, we overwrite it
         if matching_score > max_matching_score:
             max_matching_score = matching_score
-            highest_response_list = list_answer
+            highest_response_list = bot_dictionary_entry['list_answer']
 
     # if the matching score is 0
     if max_matching_score == 0:
         answer = 'Entschuldige, das habe ich nicht verstanden :-('
 
     else:
-        # chose randomly from one of the answer list
+        # chose randomly from one of the known answers
         answer = sample(highest_response_list, 1)[0]
 
     return answer
@@ -86,7 +90,6 @@ def get_text_response(user_input):
 
     # divide the sentence into words
     user_message_as_word_list = cleaned_question.lower().split()
-
     return get_highest_match_answer(user_message_as_word_list)
 
 
@@ -104,13 +107,15 @@ if __name__ == '__main__':
 
     time = datetime.datetime.now().strftime('%H: uhr: %M: minuten und: %S: sekunden')
     today = datetime.datetime.now().strftime('%d:%m:%Y')
+
+    # initalize sound
     bot = init_bot()
 
     # Loads the bot dictionary from file
-    with open('bot_base_word_list.json') as file:
+    with open('bot_dictionary.json') as file:
         bot_dictionary = json.loads(file.read())
 
-    # Ask user for a question and try to answer it as bot
+    # Ask user for a question and try to answer it as a bot
     while True:
         user_question = input('User: ')
         response = get_response(user_question)
