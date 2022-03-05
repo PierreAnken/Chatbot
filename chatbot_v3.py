@@ -1,18 +1,19 @@
 import datetime
 import json
+import os
 import string
-from io import BytesIO
 from random import sample
 from time import sleep
-
-from gtts import gTTS
-import os
-import pyglet
-
 try:
-    import pyttsx3 as tts
+    import pyglet
 except:
-    raise Exception(f'Missing library pyttsx3. Please install it with "pip install pyttsx3"')
+    raise Exception(f'Missing library pyglet. Please install it with "pip install pyglet"')
+try:
+    from gtts import gTTS
+except:
+    raise Exception(f'Missing library gtts. Please install it with "pip install gtts"')
+
+
 
 
 def compute_message_probability(user_message, list_optional_keyword, list_required_keyword=None):
