@@ -14,8 +14,6 @@ except:
     raise Exception(f'Missing library gtts. Please install it with "pip install gtts"')
 
 
-
-
 def compute_message_probability(user_message, list_optional_keyword, list_required_keyword=None):
 
     # If no required word, init empty list needed for the script
