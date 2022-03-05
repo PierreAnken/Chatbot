@@ -1,7 +1,13 @@
 import datetime
 import json
 import string
+from io import BytesIO
 from random import sample
+from time import sleep
+
+from gtts import gTTS
+import os
+import pyglet
 
 try:
     import pyttsx3 as tts
@@ -70,15 +76,16 @@ def get_highest_match_answer(user_input_cleaned):
 
         if max_matching_score == 0:
             # When the bot did not had an answer
-            save_new_learned_question(user_input_cleaned)
-
-            if user_language == 'de':
-                answer = 'Danke für das Hinweis!'
-            elif user_language == 'en':
-                answer = 'Thank you for the hint!'
+            answer_saved = save_new_learned_question(user_input_cleaned)
+            if answer_saved:
+                if user_language == 'de':
+                    answer = 'Danke für das Hinweis!'
+                elif user_language == 'en':
+                    answer = 'Thank you for the hint!'
+                else:
+                    answer = 'Merci de ton aide!'
             else:
-                answer = 'Merci de ton aide!'
-
+                answer = None
         else:
             # chose randomly from one of the known answers
             answer = sample(highest_response_list, 1)[0]
@@ -91,49 +98,52 @@ def get_highest_match_answer(user_input_cleaned):
 
 def save_new_learned_question(user_input_cleaned):
 
+    # say we did not understand the question
     if user_language == 'de':
-        correct_answer = input('Entschuldige, das habe ich nicht verstanden :-(\nWas wäre für euch ein richtige antwort? ')
-    elif user_language == 'en':
-        correct_answer = input('Sorry I did not understood you :-(\nWhat would be a right answer for you? ')
-    else:
-        correct_answer = input('Désolé je ne t\'ai pas compris :-(\nComment tu répondrais à cette question? ')
+        bot_answer = 'Entschuldige, das habe ich nicht verstanden'
+        bot_question = 'Was wäre für euch ein richtige antwort? '
 
-    new_learned_dictionary = {
-        'list_answer': [correct_answer],
-        'list_optional_keyword': user_input_cleaned,
-        'list_required_keyword': []
-    }
-    bot_learned_answers.append(new_learned_dictionary)
-    with open(f'learned_answers_{user_language}.json', 'w') as file2:
-        file2.write(json.dumps(bot_learned_answers, ensure_ascii=False))
+    elif user_language == 'en':
+        bot_answer = 'Sorry I did not understood you'
+        bot_question = 'What would be a right answer for you? '
+
+    else:
+        bot_answer = 'Désolé je ne t ai pas compris.'
+        bot_question = 'Comment tu répondrais à cette question?'
+
+    give_answer(bot_answer)
+
+    # remove small words from user question
+    user_input_cleaned = [user_word for user_word in user_input_cleaned if len(user_word) > 3]
+
+    # only save the answer if we have at least 2 long words in the question
+    if len(user_input_cleaned) > 1:
+        give_answer(bot_question)
+        correct_answer = input('... : ')
+        new_learned_dictionary = {
+            'list_answer': [correct_answer],
+            'list_optional_keyword': user_input_cleaned,
+            'list_required_keyword': []
+        }
+        bot_learned_answers.append(new_learned_dictionary)
+        with open(f'learned_answers_{user_language}.json', 'w') as file2:
+            file2.write(json.dumps(bot_learned_answers, ensure_ascii=False))
+        return True
+    return False
 
 
 def give_answer(answer):
     print('Bot: ' + answer)
-    bot.say(answer)
-    bot.runAndWait()
 
+    tts_text = gTTS(answer, lang=user_language)
+    filename = 'temp.mp3'
+    tts_text.save(filename)
 
-def init_bot():
+    music = pyglet.media.load(filename, streaming=False)
+    music.play()
 
-
-    if user_language == 'de':
-        voice = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speeches\Voices\Tokens\TTS_MS_DE-DE_HEDDA_11.0"
-    elif user_language == 'en':
-        voice = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
-    else:
-        voice = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_FR-FR_HORTENSE_11.0"
-
-    speaker = tts.init()
-
-    # Zu entfernen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    for voice in speaker.getProperty('voices'):
-        print(voice, voice.id)
-
-    speaker.setProperty('rate', 170)
-    speaker.setProperty('volume', 0.7)
-    speaker.setProperty('voice', voice)
-    return speaker
+    sleep(music.duration)
+    os.remove(filename)
 
 
 def get_response(user_input):
@@ -169,13 +179,10 @@ if __name__ == '__main__':
     time = datetime.datetime.now().strftime('%H: uhr: %M: minuten und: %S: sekunden')
     today = datetime.datetime.now().strftime('%d:%m:%Y')
 
-
     user_language = ''
     while user_language not in ('de', 'en', 'fr'):
         user_language = input('What is your language? (de/en/fr)')
 
-    # initalize sound
-    bot = init_bot()
 
     # Loads the bot dictionary from file
     with open(f'bot_dictionary_{user_language}.json') as file:
@@ -189,4 +196,5 @@ if __name__ == '__main__':
     while True:
         user_question = input('User: ')
         response = get_response(user_question)
-        give_answer(response)
+        if response:
+            give_answer(response)
