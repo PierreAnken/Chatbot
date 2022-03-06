@@ -139,8 +139,8 @@ def give_answer(answer):
     tts_text.save(filename)
 
     music = pyglet.media.load(filename, streaming=False)
-    music.play()
-
+    player = music.play()
+    player.pitch = 1.2
     sleep(music.duration)
     os.remove(filename)
 
